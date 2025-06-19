@@ -32,6 +32,7 @@ import numpy as np
 import aeolis.gridparams
 from matplotlib import pyplot as plt
 from numba import njit
+import math
 
 # package modules
 from aeolis.utils import *
@@ -229,6 +230,39 @@ def wet_bed_reset(s, p):
             
     return s
 
+
+def linear_scr(s, p):
+    ''' Increase elevation of beach topography.
+
+    Parameters
+    ----------
+    s : dict
+        Spatial grids
+    p : dict
+        Model configuration parameters
+
+    Returns
+    -------
+    dict
+        Spatial grids
+
+    '''
+        
+    if p['process_linear_scr']:
+        xi = (s['zb']) < p['dune_toe_elevation']
+        beach_z = s['zb'][xi]
+        beach_inc = p['sed_inc']*math.cos((math.pi/2)-math.atan(p['beach_slope']))
+        vrate = (beach_inc*(1/365.25/24/3600))*p['dt'] #(m/timestep)
+        # print(scr)
+        # sed_inc = p['sed_inc']
+        b = beach_z[0] + vrate
+        x = s['x'][xi] #print what xi looks like ==> add additional 
+        slope = p['beach_slope']
+        new_beach = slope*x + b #ADD (x+h) 
+        s['zb'][xi] =new_beach
+
+        # exit() 
+    return s
 
 
 def update(s, p):

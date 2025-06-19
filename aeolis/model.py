@@ -356,6 +356,9 @@ class AeoLiS(IBmi):
         # reset original bed in marine zone (wet)
         self.s = aeolis.bed.wet_bed_reset(self.s, self.p)
 
+        # beach growth
+        self.s = aeolis.bed.linear_scr(self.s, self.p)
+
         # calculate average bed level change over time
         self.s = aeolis.bed.average_change(self.l, self.s, self.p)
 
