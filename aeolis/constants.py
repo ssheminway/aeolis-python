@@ -142,6 +142,10 @@ MODEL_STATE = {
         'unST',                            # [NEW] [m/s] Component of the saltation velocity in y-direction for SedTRAILS
         'u0',
         'masstop',                          # [kg/m^2] Sediment mass in bed toplayer, only stored for output
+        'zshore',
+        'xshore',
+        'dte',
+        'beachslope',
     ),
     ('ny','nx','nlayers') : (
         'thlyr',                            # [m] Bed composition layer thickness
@@ -174,8 +178,8 @@ DEFAULT_CONFIG = {
     'process_runup'                 : False,              # Enable the process of wave runup
     'process_moist'                 : False,              # Enable the process of moist
     'process_mixtoplayer'           : False,              # Enable the process of mixing 
-    'process_wet_bed_reset'         : False,              # Enable the process of bed-reset in the intertidal zone
-    'process_linear_scr'            : False,              # Enable the process of linear shoreline change rate
+    # 'process_wet_bed_reset'         : False,              # Enable the process of bed-reset in the intertidal zone
+    'process_sediment_supply'       : False,              # Enable the process of linear shoreline change rate
     'process_meteo'                 : False,              # Enable the process of meteo
     'process_salt'                  : False,              # Enable the process of salt
     'process_humidity'              : False,              # Enable the process of humidity
@@ -343,7 +347,10 @@ DEFAULT_CONFIG = {
     'rhoveg_max'                    : 0.5,                #maximum vegetation density, only used in duran and moore 14 formulation
     't_veg'                         : 3,                  #time scale of vegetation growth (days), only used in duran and moore 14 formulation
     'v_gam'                         : 1,                  # only used in duran and moore 14 formulation
-    'inc_sed'                       : 0,                  # Elevation added to beach during process sed supply (shoreline change rate rate m/hr)
+    'method_sed_supply'             :'pos_shoreline_change', # Name of method to comput sediment supply (pos_shoreline_change, wet_bed_reset)
+    'shoreline_change_rate'         : 0,                  # Elevation added to beach during process sed supply (shoreline change rate m/year)
+    'zshoreline'                    :0,
+    'xshoreline'                    :0
 
 }
 
