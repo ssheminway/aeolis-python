@@ -264,8 +264,6 @@ def sediment_supply(s, p):
         if p['method_sed_supply'] == 'vertical_beach_growth':
             beach_inc = p['shoreline_change_rate']*math.cos((math.pi/2)-math.atan(p['beach_slope']))
             vrate = (beach_inc*(1/365.25/24/3600))*p['dt'] #(m/timestep)
-            s['zshore'] = s['zshore'] + vrate
-
             ny, nx = s['zb'].shape  
 
             for iy in range(ny):
@@ -292,8 +290,6 @@ def sediment_supply(s, p):
 
                 xi = zb_all < p['dune_toe_elevation']
                 beach_z = zb_all[xi]
-                s['dte'] = beach_z[-1]
-
                 x = x_all[xi]
 
                 xi3 = np.where(beach_z > p['zshoreline'])
@@ -320,8 +316,6 @@ def sediment_supply(s, p):
                 xi = zb_all <= p['dune_toe_elevation']
                 beach_z = zb_all[xi]
 
-                s['dte'][iy,:] = beach_z[-1]
-
                 x = x_all[xi]
 
                 xi3 = np.where(beach_z > p['zshoreline'])
@@ -332,8 +326,6 @@ def sediment_supply(s, p):
                 xy2 = (np.max(x), np.max(beach_z))
 
                 new_slope = (xy2[1]-xy1[1])/(xy2[0]-(xy1[0]))
-                s['beachslope'][iy,:] = new_slope
-
                 b = np.min(beach_z[xi3]) + vrate
                 new_temp_beach = new_slope*(beach_x) + b
 
@@ -342,10 +334,7 @@ def sediment_supply(s, p):
 
                 xi4 = new_temp_beach > p['dune_toe_elevation']
                 new_temp_beach[xi4] = p['dune_toe_elevation']
-
-                s['xshore'][iy,:] = s['xshore'][0][0] - hrate
-                s['zshore'][iy,:] = s['zshore'][0][0] + vrate
-
+                
                 s['zb'][iy,xi]= new_temp_beach
     return s
 
