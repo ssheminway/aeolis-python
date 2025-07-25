@@ -74,12 +74,6 @@ def initialize(s, p):
     s['zb0'][:,:] = p['bed_file']
     s['zne'][:,:] = p['ne_file']
 
-    #initialize variable shoreline, beach slope, dune toe elevation
-    s['zshore'][:,:] = p['zshoreline']
-    s['xshore'][:,:] = p['xshoreline']
-    s['beachslope'][:,:] = p['beach_slope']
-    s['dte'][:,:] = p['dune_toe_elevation']
-
     #initialize thickness of erodable or dry top layer
     s['zdry'][:,:] = 0.05
     
@@ -334,7 +328,6 @@ def sediment_supply(s, p):
 
                 xi4 = new_temp_beach > p['dune_toe_elevation']
                 new_temp_beach[xi4] = p['dune_toe_elevation']
-                
                 s['zb'][iy,xi]= new_temp_beach
     return s
 
